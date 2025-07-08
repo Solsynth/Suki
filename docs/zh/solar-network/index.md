@@ -1,5 +1,5 @@
 ---
-title: Solar Network
+title: 快速开始
 ---
 
 # Solar Network

@@ -8,6 +8,7 @@ theme:
     - navigation.instant.progress
     - navigation.tabs
     - navigation.sections
+
 plugins:
   - meta
   - social
@@ -25,6 +26,7 @@ plugins:
         - locale: zh
           name: 简体中文
           build: true
+
 markdown_extensions:
   - attr_list
   - md_in_html
@@ -32,3 +34,9 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
