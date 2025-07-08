@@ -14,6 +14,7 @@ plugins:
   - social
   - search
   - awesome-nav
+  - git-revision-date-localized
   - git-authors
   - glightbox
   - i18n:
