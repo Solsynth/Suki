@@ -13,6 +13,7 @@ plugins:
   - social
   - search
   - awesome-nav
+  - git-authors
   - glightbox
   - i18n:
       docs_structure: folder

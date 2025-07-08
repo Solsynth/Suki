@@ -12,3 +12,5 @@ Suki 的名字是 **Su**n Wi**ki**pedia (太阳维基) 的简写。
 
 Suki 包含了 Solsynth 用户指南和开发者文档。
 就目前来说，大多数内容都是关于 Solar Network 也就是 SN 的。
+
+目前来说，内容还不够完善。
