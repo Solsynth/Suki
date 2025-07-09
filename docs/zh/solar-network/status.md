@@ -8,4 +8,3 @@ title: 状态
 ![](/assets/images/account-status.jpg){ width="380" }
 
 您的状态会自动更改，也可以手动设置。
-
