@@ -22,3 +22,7 @@ Solian 的客户端在第一次输入 PIN Code 之后会在本地安全的情况
   ![Solarpay Example](/assets/images/stellar-solarpay.png){ width="300" }
   <figcaption>Solarpay 支付的屏幕截图</figcaption>
 </figure>
+
+## 源点获取
+
+目前，源点获取方式是签到的，也只能通过签到获得。
