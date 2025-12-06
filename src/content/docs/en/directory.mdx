@@ -1,0 +1,27 @@
+---
+title: Docs Directory
+description: Browse the docs directory and discover all the docs in one place.
+template: splash
+---
+
+import { LinkCard, Card, CardGrid } from "@astrojs/starlight/components";
+
+## All Product Docs
+
+<CardGrid stagger>
+  <LinkCard
+    title="Standards"
+    description="The Solsynth products standards and specifications."
+    href="/en/standards"
+  />
+  <LinkCard
+    title="The Solar Network"
+    description="The Solsynth primary product, the Solar Network."
+    href="/en/solar-network"
+  />
+  <LinkCard
+    title="GoatCraft"
+    description="The official Minecraft server hosted by the Solsynth team, not affiliated with Mojang."
+    href="/en/goatcraft"
+  />
+</CardGrid>

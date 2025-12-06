@@ -1,0 +1,19 @@
+{
+  "name": "suki",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/starlight": "^0.37.0",
+    "astro": "^5.6.1",
+    "sharp": "^0.34.2",
+    "typescript": "^5.9.3"
+  }
+}

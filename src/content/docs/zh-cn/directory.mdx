@@ -1,0 +1,27 @@
+---
+title: 文档目录
+description: 浏览文档目录，了解所有文档。
+template: splash
+---
+
+import { LinkCard, Card, CardGrid } from "@astrojs/starlight/components";
+
+## 所有产品文档
+
+<CardGrid stagger>
+  <LinkCard
+    title="规范"
+    description="Solsynth 产品的规范和规格。"
+    href="/zh-cn/standards"
+  />
+  <LinkCard
+    title="太阳能网络"
+    description="Solsynth 的主要产品，太阳能网络。"
+    href="/zh-cn/solar-network"
+  />
+  <LinkCard
+    title="GoatCraft"
+    description="Solsynth 团队托管的官方 Minecraft 服务器，与 Mojang 无关。"
+    href="/zh-cn/goatcraft"
+  />
+</CardGrid>
