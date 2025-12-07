@@ -11,6 +11,7 @@ export default defineConfig({
       description:
         "Solsynth's products kownledge base, including Solar Network, GoatCraft and more.",
       defaultLocale: 'root',
+      favicon: 'favicon.png',
       locales: {
         en: {
           label: "English",
