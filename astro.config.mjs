@@ -9,11 +9,14 @@ export default defineConfig({
     starlight({
       title: "Suki",
       description:
-        "Solsynth's products kownledge base, including Solar Network, GoatCraft and more.", defaultLocale: "zh-cn", locales: {
+        "Solsynth's products kownledge base, including Solar Network, GoatCraft and more.",
+      defaultLocale: 'root',
+      locales: {
         en: {
           label: "English",
+          lang: 'en',
         },
-        "zh-cn": {
+        root: {
           label: "简体中文",
           lang: "zh-CN",
         },
