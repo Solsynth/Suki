@@ -1,0 +1,58 @@
+---
+title: GoatCraft Auth
+description: 如何使用 GoatCraft Auth 登陆服务器
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+GoatCraft Auth（简称 GCA）是一个外置的登录工具，
+允许玩家在不使用正版 Minecraft 账户的情况下登录 GoatCraft 服务器。
+这对于那些没有正版账户但仍然希望体验 GoatCraft 的玩家来说非常有用。
+
+来使用 GCA，你首先需要一个支持外置登陆的 Minecraft 启动器。
+以下是一些支持外置登陆的 Minecraft 启动器：
+
+- PojavLauncher
+- HMCL
+- ...
+
+同时，你还需要一个 Solarpass 帐号，来授权 GoatCraft Auth 进行登录。
+
+<Aside title="Credit">
+GoatCraft Auth 是 Drasl 开源项目的部署实力，感谢其开发团队的贡献。
+如果你也想要一个外置登陆站同时不喜欢 Blessing 的 PHP 和臃肿的功能，
+你可以参考看看 [Drasl](https://github.com/unmojang/drasl) 项目。
+</Aside>
+
+## 直接使用 GCA
+
+1. 前往 [GoatCraft Auth](https://authmc.solsynth.dev) 网站。
+2. 点选 "Sign in with Solarpass" 或 "使用 Solarpass 登录" 按钮。
+3. 允许 GoatCraft Auth 访问你的 Solarpass 帐号。
+4. 根据提示，选择设定 Minecraft 的用户名称。
+    - **注意，若你之前使用正版帐号登陆过 GoatCraft，请在此处根据提示链接现有的 Mojang 帐号。**
+      **不然会造成玩家数据冲突导致游玩数据丢失。**
+      **查看下方的「曾经使用正版登陆的玩家章节」了解更多。**
+5. 完成后，你将获得一个 MC Token 和 用户名称，记下它们。
+6. 打开你的 Minecraft 启动器，进入设置页面。
+7. 找到 "外置登录" 或类似选项，输入你从 GCA 获得的 MC Token 和 用户名称。
+    - 不同启动器的设置方式可能有所不同，请参考你所使用的启动器的文档。
+    - 用户名字段是 GCA 设定的角色名称；密码字段是获取到的 MC Token。
+    - 服务器地址填写 `authmc.solsynth.dev/authlib-injector`。
+8. 保存设置并启动游戏，你现在应该可以使用 GCA 登录 GoatCraft 服务器了。
+
+## 曾经使用正版登陆的玩家
+
+即使你之前使用正版 Minecraft 帐号登录过 GoatCraft，你仍然可以使用 GCA 进行登录。
+并且这会带来许多好处，例如和 Solar Network 交互的一些功能。
+并且再次加入服务器时不会提示 "Link your Solarpass account to unlock more features!".
+
+跟随上述步骤执行到第四步时，请不要创建新的玩家角色。请链接你现有的 Mojang 帐号：
+
+1. 在 GCA 网站上看到 "Register from an existing account" 
+   或 "从现有 Minecraft 帐号注册" 选项时
+   按照提示填写你 Minecraft 正版帐号的用户名。
+2. 之后，GCA 会要求你下载一个皮肤文件，你需要将其设置成为你 Minecraft 正版帐号的皮肤。
+   这是为了验证你对该正版帐号的拥有权。
+3. 设置好皮肤后，返回 GCA 网站，点击 "Register" 或 "注册" 按钮。
+4. 大功告成，你可以继续转到上述章节第五部继续执行客户端的配置。
