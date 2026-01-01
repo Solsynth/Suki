@@ -64,6 +64,11 @@ export default defineConfig({
               translations: { "zh-CN": "恒星计划" },
             },
             {
+              label: "ActivityPub & Fediverse",
+              link: "solar-network/activitypub",
+              translations: { "zh-CN": "ActivityPub 和联邦网络" },
+            },
+            {
               label: "Open Platform",
               autogenerate: { directory: "solar-network/developers" },
               translations: { "zh-CN": "开放平台" },
