@@ -252,9 +252,7 @@ Zone 注入的顶级变量：
 
 ```json
 {
-  "config": {
-    "auto_minify_assets": true
-  }
+  "auto_minify_assets": true
 }
 ```
 
@@ -475,11 +473,6 @@ RSS 通过 `site.config.rss`（在站点创建/更新 API 载荷中）配置。
 - `base_url`（或 `site.config.base_url`）在构建站点地图 URL 时覆盖请求主机。
 
 ## 故障排除
-
-### `Unknown tag 'render'`
-
-- 确保 Zone 已更新到注册 `render` 别名的构建。
-- 升级后重启/重新部署 Zone 服务/容器。
 
 ### 模版未找到
 
