@@ -844,7 +844,7 @@ Content-Type: application/json
   "duration_minutes": 10
 }
 
-Response 200 OK
+esponse 200 OK
 ```
 
 **请求字段：**
