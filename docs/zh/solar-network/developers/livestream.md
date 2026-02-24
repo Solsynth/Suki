@@ -1,5 +1,5 @@
 ---
-title: 直播
+title: 直播开发
 ---
 
 ## 概述
@@ -18,21 +18,21 @@ title: 直播
 ### 组件
 
 1. **LiveKit 基础设施**
-    - **Room**：每个直播流会话的 WebRTC 房间
-    - **Ingress**：流媒体的 RTMP 输入端点（OBS → LiveKit）
-    - **Egress (RTMP)**：到外部平台的 RTMP 输出
-    - **Egress (HLS)**：用于播放的 HLS 段生成
+   - **Room**：每个直播流会话的 WebRTC 房间
+   - **Ingress**：流媒体的 RTMP 输入端点（OBS → LiveKit）
+   - **Egress (RTMP)**：到外部平台的 RTMP 输出
+   - **Egress (HLS)**：用于播放的 HLS 段生成
 
 2. **Sphere API** (DysonNetwork.Sphere)
-    - 用于流管理的 RESTful API
-    - 用于 WebRTC 身份验证的令牌生成
-    - 通过 Entity Framework 进行数据库持久化
+   - 用于流管理的 RESTful API
+   - 用于 WebRTC 身份验证的令牌生成
+   - 通过 Entity Framework 进行数据库持久化
 
 3. **模型**
-    - `SnLiveStream`：直播流元数据的数据库模型
-    - `LiveStreamStatus`：待处理、活跃、已结束、错误
-    - `LiveStreamType`：常规、互动
-    - `LiveStreamVisibility`：公开、未列出、私有
+   - `SnLiveStream`：直播流元数据的数据库模型
+   - `LiveStreamStatus`：待处理、活跃、已结束、错误
+   - `LiveStreamType`：常规、互动
+   - `LiveStreamVisibility`：公开、未列出、私有
 
 ## API 端点
 
@@ -91,8 +91,8 @@ Response 200 OK:
 
 **查询参数：**
 
-| 参数 | 类型 | 描述 |
-|------|------|------|
+| 参数  | 类型   | 描述                                                       |
+| ----- | ------ | ---------------------------------------------------------- |
 | `pub` | string | 可选的发布者名称。如果未指定，使用用户的第一个个人发布者。 |
 
 **授权：** 需要身份验证并且至少在一个发布者中拥有成员身份。如果指定了 `pub`，则需要在该发布者上至少具有编辑者角色。
@@ -164,12 +164,12 @@ Response 200 OK:
 
 **请求字段：**
 
-| 字段 | 类型 | 描述 |
-|------|------|------|
-| `participant_name` | string | 流媒体者的可选显示名称 |
-| `no_ingress` | boolean | 如果为 `true`，完全跳过入口创建（用于应用内 WebRTC 发布） |
-| `use_whip` | boolean | 如果为 `true`，创建 WHIP 入口而不是 RTMP（默认：false） |
-| `enable_transcoding` | boolean | 为入口启用转码（默认：true，如果不支持则忽略 WHIP） |
+| 字段                 | 类型    | 描述                                                      |
+| -------------------- | ------- | --------------------------------------------------------- |
+| `participant_name`   | string  | 流媒体者的可选显示名称                                    |
+| `no_ingress`         | boolean | 如果为 `true`，完全跳过入口创建（用于应用内 WebRTC 发布） |
+| `use_whip`           | boolean | 如果为 `true`，创建 WHIP 入口而不是 RTMP（默认：false）   |
+| `enable_transcoding` | boolean | 为入口启用转码（默认：true，如果不支持则忽略 WHIP）       |
 
 **授权：** 需要身份验证并且在流的发布者上具有编辑者角色。
 
@@ -186,10 +186,12 @@ Response 200 OK:
 - 流密钥：`{stream_key}`
 
 **WHIP 使用：**
+
 - 使用 `url` 作为 WHIP 端点
 - 通常用于基于浏览器的 WebRTC 流媒体
 
 **应用内使用（`no_ingress: true`）：**
+
 1. 通过 `GET /sphere/livestreams/{id}/token?identity=streamer_{userId}` 获取带有流媒体者身份的令牌
 2. 使用 LiveKit SDK 连接并发布音频/视频
 
@@ -388,13 +390,14 @@ Response 200 OK:
 
 **查询参数：**
 
-| 参数 | 类型 | 默认值 | 描述 |
-|------|------|--------|------|
-| `streamer` | boolean | false | 如果为 true 且用户具有编辑者角色，则授予流媒体者权限 |
+| 参数       | 类型    | 默认值 | 描述                                                 |
+| ---------- | ------- | ------ | ---------------------------------------------------- |
+| `streamer` | boolean | false  | 如果为 true 且用户具有编辑者角色，则授予流媒体者权限 |
 
 **授权：** 公开，可选身份验证。如果经过身份验证且用户在发布者上具有编辑者角色，他们将获得流媒体者权限（可以发布音频/视频）。否则，他们获得观众权限（只能订阅）。
 
 **令牌身份：**
+
 - 已认证用户：`account.Name`（如果 Name 为 null，则为 `user_{accountId}`）
 - 匿名用户：`guest_{uuid}`
 - 令牌元数据包括：`livestream_id`、`is_streamer`、`account_id`
@@ -482,17 +485,18 @@ Response 200 OK:
 
 **请求体字段：**
 
-| 字段 | 类型 | 默认值 | 描述 |
-|------|------|--------|------|
-| `playlist_name` | string | "playlist.m3u8" | HLS 播放列表文件的名称 |
-| `segment_duration` | uint | 6 | 每个段的持续时间（秒） |
-| `segment_count` | int | 0 | 要保留的段数（0 = 无限制） |
-| `layout` | string | "default" | 视频合成布局 |
-| `hls_base_url` | string | Auto | HLS 播放的基础 URL（默认为 `https://{host}/hls`） |
+| 字段               | 类型   | 默认值          | 描述                                              |
+| ------------------ | ------ | --------------- | ------------------------------------------------- |
+| `playlist_name`    | string | "playlist.m3u8" | HLS 播放列表文件的名称                            |
+| `segment_duration` | uint   | 6               | 每个段的持续时间（秒）                            |
+| `segment_count`    | int    | 0               | 要保留的段数（0 = 无限制）                        |
+| `layout`           | string | "default"       | 视频合成布局                                      |
+| `hls_base_url`     | string | Auto            | HLS 播放的基础 URL（默认为 `https://{host}/hls`） |
 
 **授权：** 需要身份验证并且在流的发布者上具有管理员（IsSuperuser）角色。
 
 **注意事项：**
+
 - 每个流只能有一个 HLS egress 处于活跃状态。如果要重新启动，请先调用 stop。
 - `playlist_url` 存储在直播流中，并在 GET 响应中返回（对所有观众可见）。
 - 段存储在 LiveKit 中配置的 `{filename_prefix}` 位置。
@@ -533,17 +537,20 @@ Response 200 OK:
 
 ```html
 <video controls autoplay>
-  <source src="https://your-cdn.com/hls/{stream-id}/playlist.m3u8" type="application/x-mpegURL">
+  <source
+    src="https://your-cdn.com/hls/{stream-id}/playlist.m3u8"
+    type="application/x-mpegURL"
+  />
 </video>
 ```
 
 **HLS.js 示例（用于不支持原生 HLS 的浏览器）：**
 
 ```javascript
-import Hls from 'hls.js';
+import Hls from "hls.js";
 
-const video = document.getElementById('video');
-const hlsUrl = 'https://your-cdn.com/hls/{stream-id}/playlist.m3u8';
+const video = document.getElementById("video");
+const hlsUrl = "https://your-cdn.com/hls/{stream-id}/playlist.m3u8";
 
 if (Hls.isSupported()) {
   const hls = new Hls();
@@ -552,9 +559,9 @@ if (Hls.isSupported()) {
   hls.on(Hls.Events.MANIFEST_PARSED, () => {
     video.play();
   });
-} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+} else if (video.canPlayType("application/vnd.apple.mpegurl")) {
   video.src = hlsUrl;
-  video.addEventListener('loadedmetadata', () => {
+  video.addEventListener("loadedmetadata", () => {
     video.play();
   });
 }
@@ -680,6 +687,7 @@ Content-Type: application/json
 ```
 
 **要求：**
+
 - 直播流必须存在
 - 直播流必须属于与帖子相同的发布者
 - 只有发布者所有者/编辑者可以附加他们的直播流
@@ -790,6 +798,7 @@ Response 200 OK:
 **实时广播：** 发送消息时，它也会通过 LiveKit 数据包广播给所有连接的参与者。客户端应监听传入的数据消息以显示实时聊天。
 
 **客户端处理（Flutter 示例）：**
+
 ```dart
 room.onDataReceived = (data) {
   final message = jsonDecode(utf8.decode(data));
@@ -840,9 +849,9 @@ Response 200 OK
 
 **请求字段：**
 
-| 字段 | 类型 | 默认值 | 描述 |
-|------|------|--------|------|
-| `duration_minutes` | integer | 10 | 禁言持续时间（分钟） |
+| 字段               | 类型    | 默认值 | 描述                 |
+| ------------------ | ------- | ------ | -------------------- |
+| `duration_minutes` | integer | 10     | 禁言持续时间（分钟） |
 
 **授权：** 需要身份验证并且在流的发布者上具有编辑者角色。
 
@@ -854,18 +863,18 @@ Response 200 OK
 
 #### 事件类型
 
-| 事件 | 描述 |
-|------|------|
-| `stream_started` | 流已开始 |
-| `stream_ended` | 流已结束 |
+| 事件             | 描述                         |
+| ---------------- | ---------------------------- |
+| `stream_started` | 流已开始                     |
+| `stream_ended`   | 流已结束                     |
 | `stream_updated` | 流元数据（标题、描述）已更新 |
 
-#### 客户端处理（Flutter 示例）：
+#### 客户端处理（Flutter 示例）
 
 ```dart
 room.onDataReceived = (data) {
   final payload = jsonDecode(utf8.decode(data));
-  
+
   switch (payload['type']) {
     case 'stream_started':
       showNotification('${payload['title']} 现在正在直播！');
@@ -892,6 +901,7 @@ room.onDataReceived = (data) {
 #### 事件载荷
 
 **stream_started：**
+
 ```json
 {
   "type": "stream_started",
@@ -902,6 +912,7 @@ room.onDataReceived = (data) {
 ```
 
 **stream_ended：**
+
 ```json
 {
   "type": "stream_ended",
@@ -911,6 +922,7 @@ room.onDataReceived = (data) {
 ```
 
 **stream_updated：**
+
 ```json
 {
   "type": "stream_updated",
@@ -973,10 +985,10 @@ Response 200 OK:
 
 **请求字段：**
 
-| 字段 | 类型 | 描述 |
-|------|------|------|
-| `amount` | decimal | 要打赏的积分数 |
-| `message` | string | 可选消息 |
+| 字段      | 类型    | 描述           |
+| --------- | ------- | -------------- |
+| `amount`  | decimal | 要打赏的积分数 |
+| `message` | string  | 可选消息       |
 
 **授权：** 需要身份验证。
 
@@ -1057,6 +1069,7 @@ Response 200 OK:
 ### 对于主播
 
 **RTMP 流媒体（OBS）：**
+
 1. **创建流** → `POST /sphere/livestreams`
 2. **开始流媒体** → `POST /sphere/livestreams/{id}/start`（返回 RTMP URL）
 3. **配置 OBS** → 设置 RTMP URL 和流密钥
@@ -1066,6 +1079,7 @@ Response 200 OK:
 7. **结束流** → `POST /sphere/livestreams/{id}/end`
 
 **应用内流媒体（移动/Web）：**
+
 1. **创建流** → `POST /sphere/livestreams`
 2. **开始流媒体** → `POST /sphere/livestreams/{id}/start` 并设置 `{"no_ingress": true}`
 3. **获取令牌** → `GET /sphere/livestreams/{id}/token?identity=streamer_{userId}`
@@ -1074,6 +1088,7 @@ Response 200 OK:
 6. **结束流** → `POST /sphere/livestreams/{id}/end`
 
 **HLS 播放流程：**
+
 1. **开始 HLS Egress** → `POST /sphere/livestreams/{id}/hls`
 2. **获取播放列表 URL** → 在响应中返回或 `GET /sphere/livestreams/{id}`
 3. **分发 URL** → 与观众分享以进行 HLS 播放
@@ -1143,6 +1158,7 @@ Response 200 OK:
 ### HLS Egress 已活跃
 
 如果您收到 "HLS egress is already active for this stream"：
+
 1. 停止现有的 HLS egress：`POST /sphere/livestreams/{id}/hls/stop`
 2. 等待几秒钟进行清理
 3. 再次开始：`POST /sphere/livestreams/{id}/hls`
@@ -1150,3 +1166,4 @@ Response 200 OK:
 ## 相关文件
 
 如果你想要开发直播房间内的扩展，请参考 [LiveKit 文档](https://docs.livekit.io)
+
