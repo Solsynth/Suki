@@ -2,8 +2,6 @@
 title: 快速开始
 ---
 
-# Solar Network
-
 Solar Network 是 Solsynth 的开源社交网络项目。
 秉持着开放、包容、友善的原则运营。自 2023 年立项，2024 年上线至今已经过去近 2 个年头了。
 
@@ -13,7 +11,7 @@ Solar Network 是 Solsynth 的开源社交网络项目。
 - [Dyson Network](https://github.com/Solsynth/DysonNetwork) Solar Network 项目的服务器侧代码
 - [Capital](https://solsynth.dev/products/solar-network) Solar Network 项目的官方网站
 
-## 在你开始之前
+### 在你开始之前
 
 在你开始使用 Solar Network 之前，这里有些信息小羊觉得你有必要了解：
 
@@ -22,24 +20,10 @@ Solar Network 是 Solsynth 的开源社交网络项目。
 - 阅读英语：尽管 Solar Network 大部份都具有本地化，但是大多数服务器返回的报错都是英语的，您可以使用翻译尝试阅读，或是在文档中查询解决方案。最后再前往官方的聊天频道或者 GitHub 反馈问题。
 - 反馈问题：你可已在我们的的 GitHub 主仓库反馈问题，在创建新 Issue 前请搜索以确保没有其他人已经反馈了相关的问题并且已被解决。
 
-## 开始使用
+### 开始使用
 
-Solar Network 的官方客户端支持绝大部分平台，你可以从以下的连接下载到：
-
-- Windows / Linux：
-  桌面版的构建交由 GitHub Actions 来自动构建，您需要前往主仓库的 GitHub 页面找到 Actions 标签。
-  选择最新的构建（即使最新的构建失败了您也可以查看一下，可能部份平台的构建出了问题也会显示全部失败）
-  在下方的 Artifacts 区域选择对应平台的构建下载。[传送门](https://github.com/Solsynth/Solian/actions)
-- iOS / macOS：苹果平台的 Solian 分为两个版本，App Store 的稳定版和 TestFlight 的开发版，
-  但是大多数情况来讲，**开发版比稳定版稳定**且有最新的功能。
-  你可以前往 [App Store](https://apps.apple.com/us/app/solian/id6499032345) 获取稳定版，
-  **但是请注意因为地缘政治原因，中国大陆地区没有 Solian 可用。**
-  不过针对这点，您可以前往
-  [TestFlight](https://testflight.apple.com/join/YJ0lmN6O) 获取开发版，
-  苹果未对 TestFlight 进行分区处理。
-- Android：您可以前往 GitHub
-  的 [Release 页面](https://github.com/Solsynth/Solian/releases) 找到最新版本下载，
-  小羊会针对每次版本更新手动构建安卓版本。
-- Web：或者说您不希望下载或者您的平台未收支持，您可以前往 [solian.app](https://solian.app) 访问 Solian 的网页版。
+Solar Network 的官方客户端支持绝大部分平台，
+你可以从 Solsynth 官网的 [Solar Network 产品页](https://solsynth.dev/zh-cn/products/solar-network#download)
+了解下载方式。
 
 当您下载完成后，您可以继续阅读章节来了解 Solar Network 的帐号系统。
