@@ -1086,95 +1086,20 @@ Response 200 OK:
 3. **连接** → 使用 LiveKit Flutter/Web SDK 和令牌
 4. **订阅** → 监听轨道并渲染视频
 
-## 数据库架构
-
-表：`live_streams`
-
-| 列 | 类型 | 描述 |
-| --- | --- | --- |
-| `id` | uuid | 主键 |
-| `title` | varchar(256) | 流标题 |
-| `description` | varchar(4096) | 流描述 |
-| `slug` | varchar(128) | URL 友好的标识符 |
-| `type` | integer | 常规 (0) 或互动 (1) |
-| `visibility` | integer | 公开 (0)、未列出 (1)、私有 (2) |
-| `status` | integer | 待处理 (0)、活跃 (1)、已结束 (2)、错误 (3) |
-| `room_name` | varchar(256) | LiveKit 房间名称 |
-| `ingress_id` | varchar(256) | LiveKit 入口 ID |
-| `ingress_stream_key` | varchar(256) | RTMP 流密钥 |
-| `egress_id` | varchar(256) | LiveKit egress ID (RTMP) |
-| `hls_egress_id` | varchar(256) | LiveKit HLS egress ID |
-| `hls_playlist_path` | text | HLS 播放列表路径（从配置构建的完整 URL） |
-| `hls_started_at` | timestamptz | HLS egress 开始时间 |
-| `started_at` | timestamptz | 流开始时间 |
-| `ended_at` | timestamptz | 流结束时间 |
-| `total_duration_seconds` | bigint | 总持续时间（秒）（累积） |
-| `total_award_score` | numeric | 总打赏分数（正向 - 负向） |
-| `viewer_count` | integer | 当前观看者数量 |
-| `peak_viewer_count` | integer | 峰值观看者数量 |
-| `thumbnail` | jsonb | 缩略图图像引用 |
-| `metadata` | jsonb | 附加元数据 |
-| `publisher_id` | uuid | 发布者的外键 |
-
-表：`live_stream_chat_messages`
-
-| 列 | 类型 | 描述 |
-| --- | --- | --- |
-| `id` | uuid | 主键 |
-| `live_stream_id` | uuid | 直播流的外键 |
-| `sender_id` | uuid | 发送者账户 ID |
-| `sender_name` | varchar(128) | 发送者显示名称 |
-| `content` | varchar(4096) | 消息内容 |
-| `created_at` | timestamptz | 消息发送时间 |
-| `deleted_at` | timestamptz | 软删除时间戳 |
-| `timeout_until` | timestamptz | 禁言到期时间（如果被禁言） |
-
-**计算字段（未存储在 DB 中）：**
-
-| 字段 | 类型 | 描述 |
-| --- | --- | --- |
-| `sender` | object | 预加载的发送者账户数据（Account） |
-
-**注意：** `sender` 字段通过批查询预加载，未存储在数据库中。
-
-**计算字段（未存储在 DB 中）：**
-
-| 字段 | 类型 | 描述 |
-| --- | --- | --- |
-| `duration` | int64 | 当前会话的持续时间（秒）（EndedAt - StartedAt） |
-| `total_duration` | int64 | 总持续时间（秒）（跨所有会话累积） |
-| `duration_formatted` | string | 人类可读的持续时间（例如 "1:30:45"） |
-
-**注意：** 当流结束并重用（再次开始）时，持续时间会累积在 `total_duration_seconds` 中。
-
-表：`live_stream_awards`
-
-| 列 | 类型 | 描述 |
-| --- | --- | --- |
-| `id` | uuid | 主键 |
-| `amount` | numeric | 积分数量 |
-| `attitude` | integer | 正向 (1) 或负向 (2) |
-| `message` | varchar(4096) | 可选消息 |
-| `live_stream_id` | uuid | 直播流的外键 |
-| `account_id` | uuid | 打赏者账户 ID |
-| `created_at` | timestamptz | 打赏时间 |
-| `updated_at` | timestamptz | 最后更新时间 |
-
 ## 安全考虑
 
-1. **身份验证**：使用 Sphere 的标准身份验证模式通过 `HttpContext.Items["CurrentUser"]`
-2. **授权**：使用基于角色的权限：
+1. **授权**：使用基于角色的权限：
    - **创建**：需要在任何发布者中拥有成员身份
    - **管理**（开始、停止）：需要在流的发布者中具有 `Editor` 角色
    - **Egress / HLS**：需要 `Editor` 角色 **AND** 账户上的 `IsSuperuser`（管理员）
    - **聊天**（发送/读取）：需要身份验证且流必须是活跃的
    - **聊天**（删除/禁言）：需要在流的发布者上具有 `Editor` 角色
-3. **令牌过期**：生成的令牌默认在 4 小时后过期
-4. **可见性**：
+2. **令牌过期**：生成的令牌默认在 4 小时后过期
+3. **可见性**：
    - `Public`：任何人都可以查看和加入
    - `Unlisted`：只能通过直接链接访问
    - `Private`：只有授权观看者
-5. **流媒体者检测**：如果用户在发布者上具有编辑者角色，会自动授予流媒体者权限
+4. **流媒体者检测**：如果用户在发布者上具有编辑者角色，会自动授予流媒体者权限
 
 ## 故障排除
 
