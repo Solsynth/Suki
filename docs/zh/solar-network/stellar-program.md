@@ -3,14 +3,11 @@ title: 恒星计划
 description: Solar Network 的营生项目
 ---
 
-import { Aside } from "@astrojs/starlight/components"
-
 > *だって僕は星だから Stellar Stellar —— [Stellar Stellar](https://youtu.be/a51VH9BYzZA?si=yuFvOGtfkuU80hwb)*
 
+!!! warning
 
-<Aside>
-本章节正在活跃的进行开发，其描述的内容有部份未实现，已经实现的功能也可能面临改变。
-</Aside>
+    本章节正在活跃的进行开发，其描述的内容有部份未实现，已经实现的功能也可能面临改变。
 
 Stellar Program 又名恒星计划是 Solar Network 的会员系统，
 参与其的成员可以获得一些特殊的福利和权限以访问新功能。

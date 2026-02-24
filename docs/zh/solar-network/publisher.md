@@ -3,8 +3,6 @@ title: 发布者和发布内容
 description: 了解在 Solar Network 上发表内容。
 ---
 
-import { Aside } from "@astrojs/starlight/components"
-
 发布者是 Solar Network 上大多数公开发表的内容的管理单位，
 一个帐号可以拥有 / 加入多个发布者。
 
@@ -15,10 +13,10 @@ import { Aside } from "@astrojs/starlight/components"
 你可以在发布帖子页面点击空白的（在未创建发布者时可用）发布者头像来创建、
 或者通过「帐号」页面前往「创作者中心」创建（桌面端可直接在侧边栏访问「创作者中心」标签）
 
-<Aside>
-若在创建发布者时出现 `Permission required` 的提示即表示你缺少部份权限。
-通常来说，用户需要接受一个确认注册的邮件来确认注册，若未确认注册的帐号不会拥有创建发布者的权限。
-</Aside>
+!!! note
+
+      若在创建发布者时出现 `Permission required` 的提示即表示你缺少部份权限。
+      通常来说，用户需要接受一个确认注册的邮件来确认注册，若未确认注册的帐号不会拥有创建发布者的权限。
 
 一个用户可以同时拥有多个发布者，也可以加入不同的发布者共同管理。
 
@@ -62,4 +60,3 @@ import { Aside } from "@astrojs/starlight/components"
 申请发布者的认证与申请帐号的验证相同，你需要向 `lily[at]solsynth.dev` 发送邮件说明，客户支持团队会在 7 个工作日之内回复处理。
 
 > 您若需要申请官方性质的认证，需要提供一些证明材料。越齐全成功率越高。
-

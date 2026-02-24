@@ -2,18 +2,16 @@
 title: Solarpass
 ---
 
-import { Aside } from "@astrojs/starlight/components";
-
 Solar Network 上的帐号又称为 Solarpass，其可以在所有 Solsynth 的产品中使用。
 
-<Aside>
-根据 Solar Network 用户协议 3.5 条中规定，您不能在 Solar Network 上创建第二个帐号。即「开小号」的行为是违反用户协议的。
-包括在封禁之后再次创建帐号来躲避处罚也是禁止的。**但删除帐号数据后再次创建帐号不在此列中。**
+!!! warning
 
-> 一个自然人只能注册、拥有一个 Solarpass 帐号，我们有权对其他同用户的子帐号采取删除数据的措施。
+    根据 Solar Network 用户协议 3.5 条中规定，您不能在 Solar Network 上创建第二个帐号。即「开小号」的行为是违反用户协议的。
+    包括在封禁之后再次创建帐号来躲避处罚也是禁止的。**但删除帐号数据后再次创建帐号不在此列中。**
 
-事实查证：[Solsynth ToS](https://solsynth.dev/terms/user-agreement-zh#账户管理和安全)
-</Aside>
+    > 一个自然人只能注册、拥有一个 Solarpass 帐号，我们有权对其他同用户的子帐号采取删除数据的措施。
+
+    事实查证：[Solsynth ToS](https://solsynth.dev/terms/user-agreement-zh#账户管理和安全)
 
 ## 创建帐号
 
