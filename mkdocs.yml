@@ -39,6 +39,11 @@ plugins:
           name: 简体中文
           build: true
   - git-revision-date-localized
+  - swagger-ui-tag:
+      docExpansion: none
+      filter: ""
+      syntaxHighlightTheme: monokai
+      tryItOutEnabled: true
 
 markdown_extensions:
   - attr_list
