@@ -1,29 +1,28 @@
 ---
-title: 快速开始
+title: Quick Start
 ---
 
-Solar Network 是 Solsynth 的开源社交网络项目。
-秉持着开放、包容、友善的原则运营。自 2023 年立项，2024 年上线至今已经过去近 2 个年头了。
+Solar Network is an open-source social networking project by Solsynth.
+Operated under the principles of openness, inclusivity, and friendliness, the project was initiated in 2023 and has been online since 2024, marking nearly 2 years of development.
 
-你可以在以下的连接了解到 Solar Network 项目的更多信息：
+You can learn more about the Solar Network project via the links below:
 
-- [Solian](https://github.com/Solsynth/Solian) Solar Network 项目的主仓库
-- [Dyson Network](https://github.com/Solsynth/DysonNetwork) Solar Network 项目的服务器侧代码
-- [Capital](https://solsynth.dev/products/solar-network) Solar Network 项目的官方网站
+- [Solian](https://github.com/Solsynth/Solian): The main repository for the Solar Network project.
+- [Dyson Network](https://github.com/Solsynth/DysonNetwork): The server-side code for Solar Network.
+- [Capital](https://solsynth.dev/products/solar-network): The official website for Solar Network.
 
-### 在你开始之前
+### Before You Begin
 
-在你开始使用 Solar Network 之前，这里有些信息小羊觉得你有必要了解：
+Before you start using Solar Network, there is some important information you should be aware of:
 
-- 配置好网络：你假若在使用 Clash 等代理工具以自动分流的方式从中国大陆地区访问 Solar Network，可能出现请求延迟高的问题，这是因为我们的服务器位于香港，可能被分配到了代理节点，建议走直连以获取更好的体验。
-- 包容心：Solar Network 名义上是 Solsynth 制作群的项目，但实际上 Solsynth 也只有一个目前还是学生的成员，因此软件中可能发现诸多设计缺陷，功能缺失以及漏洞和报错。还请多多包容。
-- 阅读英语：尽管 Solar Network 大部份都具有本地化，但是大多数服务器返回的报错都是英语的，您可以使用翻译尝试阅读，或是在文档中查询解决方案。最后再前往官方的聊天频道或者 GitHub 反馈问题。
-- 反馈问题：你可已在我们的的 GitHub 主仓库反馈问题，在创建新 Issue 前请搜索以确保没有其他人已经反馈了相关的问题并且已被解决。
+- **Network Configuration:** If you are using proxy tools like Clash with automatic分流 (split tunneling) to access Solar Network from mainland China, you may experience high request latency. This is because our servers are located in Hong Kong and might be routed through a proxy node. We recommend using a direct connection for a better experience.
+- **Patience is a Virtue:** Although Solar Network is nominally a project by the Solsynth dev group, in reality, Solsynth currently only has one student member. Therefore, you may encounter various design flaws, missing features, bugs, or errors. Your patience and understanding are greatly appreciated.
+- **English Reading Skills:** Although most of Solar Network is localized, the majority of server-side error messages are in English. You may need to use a translator to read them or look up solutions in the documentation before seeking help.
+- **Reporting Issues:** You can report problems in our GitHub main repository. Before creating a new Issue, please search to ensure that no one else has already reported the issue and that it hasn't been resolved.
 
-### 开始使用
+### Getting Started
 
-Solar Network 的官方客户端支持绝大部分平台，
-你可以从 Solsynth 官网的 [Solar Network 产品页](https://solsynth.dev/zh-cn/products/solar-network#download)
-了解下载方式。
+The official Solar Network client supports almost all platforms.
+You can find download instructions on the [Solar Network product page](https://solsynth.dev/en/products/solar-network#download) of the Solsynth website.
 
-当您下载完成后，您可以继续阅读章节来了解 Solar Network 的帐号系统。
+After downloading, you can continue reading the next chapters to learn about the Solar Network account system.
