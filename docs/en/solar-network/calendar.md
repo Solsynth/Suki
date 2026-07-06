@@ -5,6 +5,10 @@ description: Create and manage personal calendar events
 
 Calendar Events let you create personal events with visibility controls, viewable in a merged calendar alongside check-ins, status updates, and notable days.
 
+## Dashboard Countdown
+
+The app dashboard features a section that displays the most recent upcoming events with a countdown, so you can always see what's coming next at a glance.
+
 ## Creating an Event
 
 Events support:

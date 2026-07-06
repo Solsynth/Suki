@@ -32,6 +32,8 @@ causing most features to be unusable. Any errors generated during this time are 
 
 Solar Network uses a self-developed Multi-Factor Authentication (MFA) system, which is more convenient than traditional Two-Factor Authentication (2FA). You can choose any verification factor that is convenient for you to log in.
 
+See the [Multi-Factor Login](./multi-factor-login.md) guide for a detailed explanation of how login works, cross-device approval, trust levels, and token management.
+
 ### Account Recovery Code
 
 The Account Recovery Code is an important security backup for your account. When you cannot log in via other methods (such as email verification codes or authenticator app codes), the recovery code can help you regain access to your account.

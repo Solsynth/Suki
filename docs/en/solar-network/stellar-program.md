@@ -38,7 +38,7 @@ Each higher tier includes all the features of the previous tier.
 
 ## Obtaining
 
-Users can obtain the Stellar Program via two methods: **In-app purchase using Source Points** or **as a gift when sponsoring the development of Solar Network**.
+Users can obtain the Stellar Program via three methods: **In-app purchase using Source Points**, **as a gift when sponsoring the development of Solar Network**, or **by redeeming a gift subscription** from another user.
 
 !!! warning
 
@@ -63,3 +63,39 @@ Although you may need to provide an order number as proof, linking the correspon
 You can sponsor LittleSheep to support the development of Solar Network and receive a Stellar Program subscription through the following method:
 
 <iframe src="https://afdian.com/leaflet?slug=littlesheep" width="640" scrolling="no" height="200" frameborder="0"></iframe>
+
+---
+
+## Gift Subscriptions
+
+Gift subscriptions allow you to purchase a Stellar Plan subscription as a gift for another user (or as an open gift for anyone to claim).
+
+### Key Features
+
+- **Gift Codes:** Each gift has a unique redemption code
+- **Flexible Redemption:** Open gifts can be redeemed by anyone; targeted gifts are recipient-specific
+- **Automatic Cleanup:** Unpaid gifts are hidden and removed after 24 hours
+
+### Sending a Gift
+
+When you purchase a gift subscription, the system generates a unique gift code. You can share this code with the intended recipient (or publicly for open gifts).
+
+### Redeeming a Gift
+
+To redeem a gift:
+
+1. Go to the gift redemption page
+2. Enter the gift code
+3. If the gift is valid and applicable to your account, the subscription will be activated
+
+!!! note
+
+    Gift codes can only be redeemed once. If the recipient already has an active subscription, the gifted subscription will be **queued** and automatically activated when the current one expires.
+
+### Things to Know
+
+- Gift subscriptions follow the same tier system as regular subscriptions
+- The recipient gets the full benefits of the gifted tier
+- If the recipient already has an active subscription, the gift is queued for after it expires
+- Unpaid gifts expire after 24 hours and are automatically cleaned up
+- Redeemed gifts cannot be transferred or refunded
