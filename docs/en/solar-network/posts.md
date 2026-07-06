@@ -55,7 +55,7 @@ You can choose different browsing modes:
 | Mode | Description |
 |------|-------------|
 | Personalized | Recommends content based on your interests (Default) |
-| Trending | Sorted by interaction热度 (popularity) |
+| Trending | Sorted by engagement (no personalization) |
 | Latest | Sorted in reverse chronological order by publish time |
 
 ### Scoring Factors

@@ -34,7 +34,7 @@ title: 通知偏好
 | `wallets.transactions` | 钱包交易记录 |
 | `auth.verification` | 身份验证 |
 | `invites.realms` | 领域邀请 |
-| `livestream.started` | 直播开始 |
+
 
 ## 如何设置
 

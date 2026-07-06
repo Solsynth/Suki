@@ -1,29 +1,29 @@
 ---
-title: 在线状态活动
+title: Presence Activity
 ---
 
-## 概述
+## Overview
 
-在线状态活动 API 允许用户管理当前活动（如游戏、音乐、健身），通过基于租约的系统实现自动过期。活动可以创建、更新和删除，支持灵活的元数据以及系统生成和用户定义的标识符。
+The Presence Activity API allows users to manage current activities (such as gaming, music, fitness) with automatic expiration via a lease-based system. Activities can be created, updated, and deleted, with support for flexible metadata and both system-generated and user-defined identifiers.
 
-## 核心功能
+## Core Features
 
-- **基于租约的过期**：活动在 1-60 分钟内自动过期，除非续期
-- **灵活的标识符**：支持自动生成的 GUID 和用户定义的 ManualId
-- **可扩展的元数据**：JSON 存储的元数据字典，用于自定义开发者数据
-- **软删除**：活动采用软删除方式，自动被过滤
-- **性能优化**：缓存的活动具有 1 分钟过期时间
-- **需要认证**：所有端点都需要有效的用户认证
+- **Lease-based expiration**: Activities automatically expire within 1-60 minutes unless renewed
+- **Flexible identifiers**: Supports both auto-generated GUIDs and user-defined ManualIds
+- **Extensible metadata**: JSON-stored metadata dictionary for custom developer data
+- **Soft delete**: Activities are soft-deleted and automatically filtered out
+- **Performance optimized**: Cached activities have a 1-minute expiration
+- **Authentication required**: All endpoints require valid user authentication
 
-## API 端点
+## API Endpoints
 
-## 获取活动
+## Get Activities
 
-获取认证用户的所有当前活动（未过期的在线状态活动）。
+Gets all current activities for the authenticated user (non-expired presence activities).
 
-**端点：** `GET /pass/activities`
+**Endpoint:** `GET /pass/activities`
 
-**响应：**
+**Response:**
 
 ```json
 [
@@ -49,20 +49,20 @@ title: 在线状态活动
 ]
 ```
 
-**常见响应码：**
+**Common Response Codes:**
 
-- `200 OK` - 成功，返回活动数组
-- `401 Unauthorized` - 认证无效或缺失
+- `200 OK` - Success, returns array of activities
+- `401 Unauthorized` - Invalid or missing authentication
 
 ---
 
-## 创建新活动
+## Create New Activity
 
-创建具有可配置租约期的新在线状态活动。
+Creates a new presence activity with a configurable lease duration.
 
-**端点：** `POST /pass/activities`
+**Endpoint:** `POST /pass/activities`
 
-**请求体：**
+**Request Body:**
 
 ```json
 {
@@ -81,36 +81,36 @@ title: 在线状态活动
 }
 ```
 
-**响应：** 返回创建的 `SnPresenceActivity` 对象，包含已填充的字段。
+**Response:** Returns the created `SnPresenceActivity` object with populated fields.
 
-**字段详情：**
+**Field Details:**
 
-- `type`：PresenceType 枚举（Unknown、Gaming、Music、Workout）
-- `manualId`：可选的用户定义字符串标识符
-- `title`、`subtitle`、`caption`：显示字符串（每个最多 4096 字符）
-- `meta`：可选的 `Dictionary<string, object>`，用于自定义数据
-- `leaseMinutes`：1-60 分钟（默认：5）
+- `type`: PresenceType enum (Unknown, Gaming, Music, Workout)
+- `manualId`: Optional user-defined string identifier
+- `title`, `subtitle`, `caption`: Display strings (max 4096 characters each)
+- `meta`: Optional `Dictionary<string, object>` for custom data
+- `leaseMinutes`: 1-60 minutes (default: 5)
 
-**响应码：**
+**Response Codes:**
 
-- `200 OK` - 活动创建成功
-- `400 Bad Request` - 租约分钟无效或数据格式错误
-- `401 Unauthorized` - 认证无效
+- `200 OK` - Activity created successfully
+- `400 Bad Request` - Invalid lease minutes or malformed data
+- `401 Unauthorized` - Invalid authentication
 
 ---
 
-## 更新活动
+## Update Activity
 
-使用 GUID 或 ManualId 更新现有活动。仅更新提供的字段。
+Updates an existing activity using either GUID or ManualId. Only updates provided fields.
 
-**端点：** `PUT /pass/activities`
+**Endpoint:** `PUT /pass/activities`
 
-**查询参数：**（需要其一）
+**Query Parameters:** (one required)
 
-- `id` - 系统生成的 GUID（字符串）
-- `manualId` - 用户定义的标识符（字符串）
+- `id` - System-generated GUID (string)
+- `manualId` - User-defined identifier (string)
 
-**请求体：**（所有字段可选）
+**Request Body:** (all fields optional)
 
 ```json
 {
@@ -124,25 +124,25 @@ title: 在线状态活动
 }
 ```
 
-**响应：** 返回更新的 `SnPresenceActivity` 对象。
+**Response:** Returns the updated `SnPresenceActivity` object.
 
-**响应码：**
+**Response Codes:**
 
-- `200 OK` - 活动更新成功
-- `400 Bad Request` - 缺少或无效的 ID 参数
-- `401 Unauthorized` - 认证无效
-- `404 Not Found` - 活动未找到或不属于该用户
+- `200 OK` - Activity updated successfully
+- `400 Bad Request` - Missing or invalid ID parameter
+- `401 Unauthorized` - Invalid authentication
+- `404 Not Found` - Activity not found or does not belong to user
 
-**示例 cURL：**
+**Example cURL:**
 
 ```bash
-# 通过 ManualId 更新
+# Update via ManualId
 curl -X PUT "/pass/activities?manualId=my-game-session" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"leaseMinutes": 20}'
 
-# 通过 GUID 更新
+# Update via GUID
 curl -X PUT "/pass/activities?id=550e8400-e29b-41d4-a716-446655440000" \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
@@ -151,51 +151,51 @@ curl -X PUT "/pass/activities?id=550e8400-e29b-41d4-a716-446655440000" \
 
 ---
 
-## 删除活动
+## Delete Activity
 
-使用 GUID 或 ManualId 软删除活动。
+Soft-deletes an activity using either GUID or ManualId.
 
-**端点：** `DELETE /pass/activities`
+**Endpoint:** `DELETE /pass/activities`
 
-**查询参数：**（需要其一）
+**Query Parameters:** (one required)
 
-- `id` - 系统生成的 GUID（字符串）
-- `manualId` - 用户定义的标识符（字符串）
+- `id` - System-generated GUID (string)
+- `manualId` - User-defined identifier (string)
 
-**请求体：** 无
+**Request Body:** None
 
-**响应：** 无内容（204）
+**Response:** No content (204)
 
-**响应码：**
+**Response Codes:**
 
-- `204 No Content` - 活动删除成功
-- `400 Bad Request` - 缺少或无效的 ID 参数
-- `401 Unauthorized` - 认证无效
-- `404 Not Found` - 活动未找到或不属于该用户
+- `204 No Content` - Activity deleted successfully
+- `400 Bad Request` - Missing or invalid ID parameter
+- `401 Unauthorized` - Invalid authentication
+- `404 Not Found` - Activity not found or does not belong to user
 
-**示例 cURL：**
+**Example cURL:**
 
 ```bash
-# 通过 ManualId 删除
+# Delete via ManualId
 curl -X DELETE "/pass/activities?manualId=my-game-session" \
   -H "Authorization: Bearer <token>"
 ```
 
 ---
 
-## 其他端点
+## Additional Endpoints
 
-### 通过账户 ID 获取活动
+### Get Activities by Account ID
 
-**端点：** `GET /pass/activities/{accountId:guid}`
+**Endpoint:** `GET /pass/activities/{accountId:guid}`
 
-用于管理或调试目的。返回指定账户 ID 的活动，无视认证状态。
+Used for administrative or debugging purposes. Returns activities for the specified account ID regardless of authentication status.
 
 ---
 
-## 数据模型
+## Data Model
 
-### PresenceType 枚举
+### PresenceType Enum
 
 ```csharp
 public enum PresenceType
@@ -212,62 +212,62 @@ public enum PresenceType
 ```csharp
 public class SnPresenceActivity : ModelBase
 {
-    public Guid Id { get; set; } // 系统生成的 GUID
+    public Guid Id { get; set; } // System-generated GUID
     public PresenceType Type { get; set; }
-    public string? ManualId { get; set; } // 用户定义的 ID
+    public string? ManualId { get; set; } // User-defined ID
     public string? Title { get; set; }
     public string? Subtitle { get; set; }
     public string? Caption { get; set; }
-    public Dictionary<string, object>? Meta { get; set; } // JSON 元数据
-    public int LeaseMinutes { get; set; } // 租约时长
-    public Instant LeaseExpiresAt { get; set; } // 过期时间戳
+    public Dictionary<string, object>? Meta { get; set; } // JSON metadata
+    public int LeaseMinutes { get; set; } // Lease duration
+    public Instant LeaseExpiresAt { get; set; } // Expiration timestamp
 
-    // 继承自 ModelBase
+    // Inherited from ModelBase
     public Guid AccountId { get; set; }
     public Instant CreatedAt { get; set; }
     public Instant UpdatedAt { get; set; }
-    public Instant? DeletedAt { get; set; } // 软删除
+    public Instant? DeletedAt { get; set; } // Soft delete
 }
 ```
 
-## 行为与约束
+## Behavior and Constraints
 
-### 租约过期
+### Lease Expiration
 
-- 当 `SystemClock.Instance.GetCurrentInstant() > LeaseExpiresAt` 时，活动自动过期
-- 过期检查在数据库查询中进行，因此过期的活动会在 GET 操作中被过滤
-- 客户端必须定期更新/续租以保持活动活跃
+- Activity automatically expires when `SystemClock.Instance.GetCurrentInstant() > LeaseExpiresAt`
+- Expiration check happens in the database query, so expired activities are filtered in GET operations
+- Clients must periodically update/renew to keep activities active
 
-### ID 灵活性
+### ID Flexibility
 
-- **ManualId**：用户定义的字符串，在用户活动范围内唯一
-- **GUID**：系统生成的，始终唯一，在 API 响应中返回
-- 两者可以互换用于更新和删除
+- **ManualId**: User-defined string, unique within the user's activities
+- **GUID**: System-generated, always unique, returned in API responses
+- Both can be interchangeably used for updates and deletes
 
-### 性能优化
+### Performance Optimization
 
-- 活动缓存 1 分钟以处理频繁更新
-- 创建/更新/删除操作会使缓存失效
-- 数据库查询自动过滤过期的活动
+- Activities are cached for 1 minute to handle frequent updates
+- Create/update/delete operations invalidate the cache
+- Database queries automatically filter expired activities
 
-### 安全
+### Security
 
-- 所有操作都限定在认证用户的账户范围内
-- 用户只能管理自己的活动
-- 无效或过期的认证令牌返回 401 Unauthorized
+- All operations are scoped to the authenticated user's account
+- Users can only manage their own activities
+- Invalid or expired authentication tokens return 401 Unauthorized
 
-### 数据存储
+### Data Storage
 
-- 活动存储在 PostgreSQL 中，支持 JSONB 元数据
-- 软删除使用时间戳而非硬删除
-- EF Core 中间件自动处理 CreatedAt/UpdatedAt 时间戳
+- Activities are stored in PostgreSQL with JSONB metadata support
+- Soft deletes use timestamps rather than hard deletes
+- EF Core middleware automatically handles CreatedAt/UpdatedAt timestamps
 
-## 使用示例
+## Usage Examples
 
-### 游戏会话管理
+### Gaming Session Management
 
 ```javascript
-// 开始游戏会话
+// Start gaming session
 const activity = await fetch("/pass/activities", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
@@ -280,7 +280,7 @@ const activity = await fetch("/pass/activities", {
   }),
 });
 
-// 更新进度（延长租约）
+// Update progress (extend lease)
 await fetch("/pass/activities?manualId=game-session-1", {
   method: "PUT",
   body: JSON.stringify({
@@ -289,16 +289,16 @@ await fetch("/pass/activities?manualId=game-session-1", {
   }),
 });
 
-// 结束会话
+// End session
 await fetch("/pass/activities?manualId=game-session-1", {
   method: "DELETE",
 });
 ```
 
-### 元数据扩展
+### Metadata Extensions
 
 ```javascript
-// 丰富的元数据支持
+// Rich metadata support
 const activity = {
   type: "Music",
   manualId: "spotify-session",
@@ -307,16 +307,16 @@ const activity = {
     spotifyTrackId: "1Je1IMUlBXcx1FzbcXRuWw",
     artist: "Purity Ring",
     album: "Shrines",
-    duration: 240000, // 毫秒
+    duration: 240000, // milliseconds
     custom: { userRating: 5, genre: "Electronic" },
   },
   leaseMinutes: 30,
 };
 ```
 
-## 错误处理
+## Error Handling
 
-常见错误响应遵循 REST API 约定：
+Common error responses follow REST API conventions:
 
 ```json
 {

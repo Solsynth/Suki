@@ -1,12 +1,12 @@
 ---
 title: Sphere API
-description: 社群服务的核心组件，主要负责发布者、帖子等相关的资源
+description: Core community service component, primarily responsible for publishers, posts, and related resources
 hide:
   - toc
 ---
 
-DysonNetwork.Sphere 服务是社群服务的核心组件，主要负责发布者、帖子等相关的资源；
+DysonNetwork.Sphere is the core component of the community services, primarily responsible for publishers, posts, and related resources.
 
-以下是自动生成的 API 文档，作为参考用途。
+Below is the auto-generated API documentation for reference.
 
 <swagger-ui src="https://api.solian.app/swagger/sphere/v1/swagger.json"/>

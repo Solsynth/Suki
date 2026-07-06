@@ -34,7 +34,7 @@ You can set the delivery method for different notification types:
 | `wallets.transactions` | Wallet transaction records |
 | `auth.verification` | Authentication verification |
 | `invites.realms` | Realm invitations |
-| `livestream.started` | Livestream has started |
+
 
 ## How to Set Up
 

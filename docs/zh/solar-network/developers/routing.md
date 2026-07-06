@@ -19,15 +19,16 @@ echo $BASE_URL/$SERVICE_ID$PATH
 
 ## 服务分工
 
-目前来说，Solar Network 服务端有四个各司其职的服务。
+目前来说，Solar Network 服务端有多个各司其职的服务。
 
 - Pass 负责身份验证（使用 `id` 访问）
 - Ring 负责推送和通知
-- Sphere 负责聊天和帖子以及领域相关的功能
+- Sphere 负责聊天、帖子和领域相关功能
 - Develop 负责开发者相关功能
-- Drive 负责文件上传
+- Drive (DysonFS) 负责文件上传和存储
+- Personality (PersonalityCore) 负责 AI 智能体和人工智能
 
-其各服务的服务 ID 即为小写服务名（不包含 DysonNetwork. 前缀）
+各服务的服务 ID 即为小写服务名（不包含 DysonNetwork. 前缀）。注意：PersonalityCore 通过 `/personality` 直接访问，而非 `/api/personality`。
 
 ## WebSocket
 

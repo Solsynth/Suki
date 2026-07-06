@@ -1,39 +1,39 @@
 ---
-title: 实时通话
+title: Realtime Call
 ---
 
-本文档介绍 Dysonnetwork 中用于语音/视频通话的实时通话 API。该实现使用 LiveKit 作为底层实时通信提供商。
+This document describes the Realtime Call API for voice/video calls in DysonNetwork. The implementation uses LiveKit as the underlying real-time communication provider.
 
-## 概述
+## Overview
 
-实时通话 API 提供以下端点：
+The Realtime Call API provides the following endpoints:
 
-- 开始/结束通话
-- 使用认证令牌加入通话
-- 管理通话参与者（踢出、静音）
-- 通过定期轮询获取参与者信息
+- Start/end calls
+- Join calls with authentication tokens
+- Manage call participants (kick, mute)
+- Get participant information through periodic polling
 
-**注意：** Webhook 已被定期 GET 请求取代，用于参与者同步。
+**Note:** Webhooks have been replaced by regular GET requests for participant synchronization.
 
-## 基础 URL
+## Base URL
 
 ```
 /messager/chat/realtime
 ```
 
-## 认证
+## Authentication
 
-所有端点都需要在 `Authorization` 头中提供有效的 Bearer 令牌。
+All endpoints require a valid Bearer token in the `Authorization` header.
 
-## 端点
+## Endpoints
 
-### 1. 获取进行中的通话
+### 1. Get Ongoing Call
 
-获取聊天室中正在进行的通话信息。
+Gets information about the ongoing call in a chat room.
 
-**端点：** `GET /{roomId:guid}`
+**Endpoint:** `GET /{roomId:guid}`
 
-**响应：** `SnRealtimeCall`
+**Response:** `SnRealtimeCall`
 
 ```json
 {
@@ -49,13 +49,13 @@ title: 实时通话
 
 ---
 
-### 2. 加入通话
+### 2. Join Call
 
-加入正在进行的通话并获取 LiveKit 认证令牌。
+Join an ongoing call and get a LiveKit authentication token.
 
-**端点：** `GET /{roomId:guid}/join`
+**Endpoint:** `GET /{roomId:guid}/join`
 
-**响应：** `JoinCallResponse`
+**Response:** `JoinCallResponse`
 
 ```json
 {
@@ -82,20 +82,20 @@ title: 实时通话
 }
 ```
 
-**注意：** `isAdmin` 字段表示用户是否可以踢出/静音参与者。以下用户为管理员：
+**Note:** The `isAdmin` field indicates whether the user can kick/mute participants. The following users are admins:
 
-- 聊天室所有者
-- 私信对话（双方都是管理员）
+- Chat room owner
+- Direct message conversations (both parties are admins)
 
 ---
 
-### 3. 获取参与者
+### 3. Get Participants
 
-获取通话中的当前参与者。此端点将参与者从 LiveKit 同步到缓存。
+Gets the current participants in the call. This endpoint syncs participants from LiveKit to the cache.
 
-**端点：** `GET /{roomId:guid}/participants`
+**Endpoint:** `GET /{roomId:guid}/participants`
 
-**响应：** `List<CallParticipant>`
+**Response:** `List<CallParticipant>`
 
 ```json
 [
@@ -110,42 +110,42 @@ title: 实时通话
 ]
 ```
 
-**用法：** 定期轮询此端点（例如每 5-10 秒）以获取更新的参与者列表，而不是依赖 webhook。
+**Usage:** Poll this endpoint periodically (e.g., every 5-10 seconds) to get updated participant lists instead of relying on webhooks.
 
 ---
 
-### 4. 开始通话
+### 4. Start Call
 
-在聊天室中开始新的通话。
+Start a new call in a chat room.
 
-**端点：** `POST /{roomId:guid}`
+**Endpoint:** `POST /{roomId:guid}`
 
-**响应：** `SnRealtimeCall`
+**Response:** `SnRealtimeCall`
 
-**错误：**
+**Errors:**
 
-- `403` - 非成员或超时
-- `423` - 通话正在进行中
-
----
-
-### 5. 结束通话
-
-结束正在进行的通话。
-
-**端点：** `DELETE /{roomId:guid}`
-
-**响应：** `204 No Content`
+- `403` - Not a member or timed out
+- `423` - Call already in progress
 
 ---
 
-### 6. 踢出参与者
+### 5. End Call
 
-从通话中踢出参与者。可选择禁止他们进入聊天室。
+End an ongoing call.
 
-**端点：** `POST /{roomId:guid}/kick/{targetAccountId:guid}`
+**Endpoint:** `DELETE /{roomId:guid}`
 
-**请求体：**
+**Response:** `204 No Content`
+
+---
+
+### 6. Kick Participant
+
+Kick a participant from the call. Optionally ban them from the chat room.
+
+**Endpoint:** `POST /{roomId:guid}/kick/{targetAccountId:guid}`
+
+**Request Body:**
 
 ```json
 {
@@ -154,55 +154,55 @@ title: 实时通话
 }
 ```
 
-| 字段                 | 类型   | 必填 | 描述                                     |
-| -------------------- | ------ | ---- | ---------------------------------------- |
-| `banDurationMinutes` | int    | 否   | 禁止进入聊室的时长（0 或 null = 不禁止） |
-| `reason`             | string | 否   | 踢出/禁止的原因                          |
+| Field                 | Type   | Required | Description                                        |
+| -------------------- | ------ | -------- | -------------------------------------------------- |
+| `banDurationMinutes` | int    | No       | Duration to ban from chat room (0 or null = no ban) |
+| `reason`             | string | No       | Reason for kick/ban                                |
 
-**响应：** `204 No Content`
+**Response:** `204 No Content`
 
-**授权：** 只有聊天室所有者/管理员可以踢出参与者。
+**Authorization:** Only the chat room owner/admin can kick participants.
 
-**行为：**
+**Behavior:**
 
-- 从 LiveKit 房间中移除参与者
-- 如果 `banDurationMinutes > 0`，则在成员上设置 `TimeoutUntil` 以阻止加入
-
----
-
-### 7. 静音参与者
-
-静音参与者的音频轨道。
-
-**端点：** `POST /{roomId:guid}/mute/{targetAccountId:guid}`
-
-**响应：** `204 No Content`
+- Removes the participant from the LiveKit room
+- If `banDurationMinutes > 0`, sets `TimeoutUntil` on the member to prevent rejoining
 
 ---
 
-### 8. 取消静音参与者
+### 7. Mute Participant
 
-取消静音参与者的音频轨道。
+Mute a participant's audio track.
 
-**端点：** `POST /{roomId:guid}/unmute/{targetAccountId:guid}`
+**Endpoint:** `POST /{roomId:guid}/mute/{targetAccountId:guid}`
 
-**响应：** `204 No Content`
+**Response:** `204 No Content`
 
 ---
 
-## 数据模型
+### 8. Unmute Participant
+
+Unmute a participant's audio track.
+
+**Endpoint:** `POST /{roomId:guid}/unmute/{targetAccountId:guid}`
+
+**Response:** `204 No Content`
+
+---
+
+## Data Model
 
 ### JoinCallResponse
 
 ```csharp
 public class JoinCallResponse
 {
-    public string Provider { get; set; }      // 例如，"LiveKit"
-    public string Endpoint { get; set; }        // LiveKit WebSocket 端点
-    public string Token { get; set; }          // 用于认证的 JWT 令牌
-    public Guid CallId { get; set; }           // 通话标识符
-    public string RoomName { get; set; }       // LiveKit 房间名称
-    public bool IsAdmin { get; set; }          // 用户是否可以管理参与者
+    public string Provider { get; set; }      // e.g., "LiveKit"
+    public string Endpoint { get; set; }        // LiveKit WebSocket endpoint
+    public string Token { get; set; }          // JWT token for authentication
+    public Guid CallId { get; set; }           // Call identifier
+    public string RoomName { get; set; }       // LiveKit room name
+    public bool IsAdmin { get; set; }          // Whether user can manage participants
     public List<CallParticipant> Participants { get; set; }
 }
 ```
@@ -212,12 +212,12 @@ public class JoinCallResponse
 ```csharp
 public class CallParticipant
 {
-    public string Identity { get; set; }       // LiveKit 身份（用户名）
-    public string Name { get; set; }          // 显示名称
-    public Guid? AccountId { get; set; }      // DysonNetwork 账户 ID
-    public DateTime JoinedAt { get; set; }     // 参与者加入时间
-    public string? TrackSid { get; set; }      // 用于静音的轨道 SID
-    public SnChatMember? Profile { get; set; } // 聊天成员资料
+    public string Identity { get; set; }       // LiveKit identity (username)
+    public string Name { get; set; }          // Display name
+    public Guid? AccountId { get; set; }      // DysonNetwork account ID
+    public DateTime JoinedAt { get; set; }     // When participant joined
+    public string? TrackSid { get; set; }      // Track SID for muting
+    public SnChatMember? Profile { get; set; } // Chat member profile
 }
 ```
 
@@ -226,16 +226,16 @@ public class CallParticipant
 ```csharp
 public class KickParticipantRequest
 {
-    public int? BanDurationMinutes { get; set; }  // 禁止时长（分钟）
-    public string? Reason { get; set; }           // 踢出/禁止的原因
+    public int? BanDurationMinutes { get; set; }  // Ban duration (minutes)
+    public string? Reason { get; set; }           // Reason for kick/ban
 }
 ```
 
 ---
 
-## 客户端实现指南
+## Client Implementation Guide
 
-### 加入通话
+### Joining a Call
 
 ```typescript
 interface CallJoinResponse {
@@ -266,7 +266,7 @@ async function joinCall(
 }
 ```
 
-### 轮询参与者
+### Polling Participants
 
 ```typescript
 interface CallParticipant {
@@ -294,14 +294,14 @@ async function getParticipants(
   return response.json();
 }
 
-// 每 5 秒轮询
+// Poll every 5 seconds
 setInterval(async () => {
   const participants = await getParticipants(roomId, authToken);
   updateParticipantList(participants);
 }, 5000);
 ```
 
-### 踢出参与者
+### Kicking a Participant
 
 ```typescript
 async function kickParticipant(
@@ -331,7 +331,7 @@ async function kickParticipant(
 }
 ```
 
-### 静音参与者
+### Muting a Participant
 
 ```typescript
 async function muteParticipant(
@@ -357,41 +357,41 @@ async function muteParticipant(
 
 ---
 
-## 最佳实践
+## Best Practices
 
-1. **轮询策略**：每 5-10 秒轮询 `/participants` 以获取准确的参与者列表。不要依赖 webhook（它们不被使用）。
+1. **Polling Strategy**: Poll `/participants` every 5-10 seconds to get accurate participant lists. Do not rely on webhooks (they are not used).
 
-2. **令牌刷新**：LiveKit 令牌在 1 小时后过期。重新获取加入端点以获取新令牌。
+2. **Token Refresh**: LiveKit tokens expire after 1 hour. Re-fetch the join endpoint to get a new token.
 
-3. **权限检查**：仅为管理员用户显示踢出/静音按钮（加入响应中的 `isAdmin: true`）。
+3. **Permission Check**: Only show kick/mute buttons for admin users (`isAdmin: true` in the join response).
 
-4. **轨道处理**：调用静音/取消静音端点时，请使用参与者数据中的 `trackSid`。请注意，如果参与者尚未发布任何轨道，`trackSid` 可能为 null。
+4. **Track Handling**: When calling mute/unmute endpoints, use the `trackSid` from the participant data. Note that `trackSid` may be null if the participant has not published any tracks yet.
 
-5. **错误处理**：妥善处理 403（未授权）、404（无进行中的通话）和网络错误。
+5. **Error Handling**: Properly handle 403 (unauthorized), 404 (no ongoing call), and network errors.
 
-6. **重连**：实现重连逻辑 - 如果通话结束（获取参与者返回 404），显示适当的 UI。
-
----
-
-## 从 Webhook 迁移
-
-之前的实现使用 LiveKit webhook 进行参与者更新。这已被定期轮询取代：
-
-| 之前                  | 之后                         |
-| --------------------- | ---------------------------- |
-| Webhook 端点接收事件  | 客户端轮询 GET /participants |
-| 通过 webhook 实时更新 | 每 5-10 秒轮询               |
-| 服务端参与者追踪      | 客户端在加入时获取并轮询     |
-
-**迁移步骤：**
-
-1. 移除 webhook 接收器代码
-2. 在客户端实现轮询
-3. 在通话加入时调用 `/participants`
-4. 设置间隔轮询 `/participants`
+6. **Reconnection**: Implement reconnection logic - if the call ends (getting participants returns 404), show appropriate UI.
 
 ---
 
-## 相关文档
+## Migration from Webhooks
 
-如果你需要开发扩展功能，请参考 [LiveKit 文档](https://docs.livekit.io)
+The previous implementation used LiveKit webhooks for participant updates. This has been replaced by periodic polling:
+
+| Before                    | After                          |
+| ------------------------- | ------------------------------ |
+| Webhook endpoint receives events | Client polls GET /participants |
+| Real-time updates via webhook | Poll every 5-10 seconds        |
+| Server-side participant tracking | Client fetches and polls on join |
+
+**Migration Steps:**
+
+1. Remove webhook receiver code
+2. Implement polling on the client
+3. Call `/participants` when joining a call
+4. Set up interval polling for `/participants`
+
+---
+
+## Related Documents
+
+If you need to develop extension features, please refer to the [LiveKit documentation](https://docs.livekit.io)

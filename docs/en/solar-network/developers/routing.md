@@ -1,13 +1,13 @@
 ---
-title: 路由及网关
-description: 了解 Solar Network API 路由的方式
+title: Routing and Gateway
+description: Learn how Solar Network API routing works
 ---
 
-众所周知，Solar Network 的服务器是一个微服务项目，所以在访问 API 的时候，您需要注意路径的指定。
+As you may know, Solar Network's server is a microservices project, so you need to pay attention to path specification when accessing APIs.
 
-其构造基本为 `<BaseURL>/<ServiceID>/<Path>`
+The basic structure is `<BaseURL>/<ServiceID>/<Path>`
 
-例如，你需要访问推送服务 (DysonNetwork.Ring) 的通知 API。
+For example, to access the notification API of the push service (DysonNetwork.Ring):
 
 ```bash
 export BASE_URL="https://api.solian.app"
@@ -17,31 +17,33 @@ echo $BASE_URL/$SERVICE_ID$PATH
 # https://api.solian.app/ring/notifications
 ```
 
-## 服务分工
+## Service Responsibilities
 
-目前来说，Solar Network 服务端有四个各司其职的服务。
+Currently, Solar Network's server side has several services, each with its own responsibilities:
 
-- Pass 负责身份验证（使用 `id` 访问）
-- Ring 负责推送和通知
-- Sphere 负责聊天和帖子以及领域相关的功能
-- Develop 负责开发者相关功能
-- Drive 负责文件上传
+- Pass: Handles authentication (access via `id`)
+- Ring: Handles push notifications
+- Sphere: Handles chat, posts, and realm-related features
+- Develop: Handles developer-related features
+- Drive (DysonFS): Handles file uploads and storage
+- Personality (PersonalityCore): Handles AI agents and intelligence
 
-其各服务的服务 ID 即为小写服务名（不包含 DysonNetwork. 前缀）
+The service ID for each service is its lowercase name (without the `DysonNetwork.` prefix). Note: PersonalityCore is accessed via `/personality` directly, not `/api/personality`.
 
 ## WebSocket
 
-WebSocket 由推送服务负责，但是不使用 `/ring` 服务 ID 访问，网关直接处理 `/ws` 的请求。
+WebSocket is handled by the push service, but is not accessed using the `/ring` service ID. The gateway handles `/ws` requests directly.
 
-WebSocket 的消息都会使用 WebSocketPacket 结构，其结构如下：
+WebSocket messages use the `WebSocketPacket` structure:
 
 ```json
 {
-    "type": "包类型",
-    "data": "包数据，可能为任何结构、类型",
-    "endpoint": "包需要请求的服务，在服务器传来的包不会携带此项；若客户端需要向服务器发送数据包，需要将此项填写为对应服务的 ID 以帮助网关转发此包",
-    "error_message": "服务器回传包的错误信息"
+    "type": "packet type",
+    "data": "packet data, may be any structure or type",
+    "endpoint": "the service this packet targets; not present in server-sent packets; if the client needs to send a packet to the server, fill this with the corresponding service ID to help the gateway forward the packet",
+    "error_message": "error message in server-returned packets"
+}
 }
 ```
 
-在访问 WebSocket 网关的时候，有两种授权方式，一种是通用的 `Authorization` 头。但是由于浏览器无法给 WebSocket 设置请求头，从而提供另一种兼容性选择，将访问令牌放置于 `?tk=` 查询参数中。
+When accessing the WebSocket gateway, there are two authorization methods: the common `Authorization` header. However, since browsers cannot set request headers for WebSocket, a compatibility alternative is provided: place the access token in the `?tk=` query parameter.

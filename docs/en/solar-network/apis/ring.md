@@ -1,12 +1,12 @@
 ---
 title: Ring API
-description: 推送以及通知服务 
+description: Push and notification services
 hide:
   - toc
 ---
 
-DysonNetwork.Ring 服务是负责通知的部份。
+DysonNetwork.Ring is the service responsible for notifications.
 
-以下是自动生成的 API 文档，作为参考用途。
+Below is the auto-generated API documentation for reference.
 
 <swagger-ui src="https://api.solian.app/swagger/ring/v1/swagger.json"/>

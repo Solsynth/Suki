@@ -20,7 +20,7 @@ Each higher tier includes all the features of the previous tier.
     -   Colored username
     -   Early access to new features
     -   1.5x Experience gain boost
-    uptos  -   Increased quotas for Realms, Bots, and Publishers
+     -   Increased quotas for Realms, Bots, and Publishers
 
 2.  **Nova Tier**
     -   All features of the **Stellar** tier

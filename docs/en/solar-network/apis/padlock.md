@@ -1,12 +1,12 @@
 ---
 title: Padlock API
-description: 登陆，授权，以及帐户安全
+description: Login, authorization, and account security
 hide:
   - toc
 ---
 
-DysonNetwork.Padlock 主要负责用户登陆，审计等一系列安全的服务。
+DysonNetwork.Padlock is primarily responsible for user login, auditing, and other security-related services.
 
-以下是自动生成的 API 文档，作为参考用途。
+Below is the auto-generated API documentation for reference.
 
 <swagger-ui src="https://api.solian.app/swagger/padlock/v1/swagger.json"/>

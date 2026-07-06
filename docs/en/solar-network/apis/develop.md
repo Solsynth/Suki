@@ -1,13 +1,13 @@
 ---
 title: Develop API
-description: 开发者服务
+description: Developer services
 hide:
   - toc
 ---
 
-DysonNetwork.Develop 主要负责调度各个服务，创建管理开发者资源。
-我觉得你没有什么理由需要自动化调用这些接口……吧。
+DysonNetwork.Develop is primarily responsible for orchestrating various services and managing developer resources.
+You probably won't have a reason to automate calls to these endpoints... right?
 
-以下是自动生成的 API 文档，作为参考用途。
+Below is the auto-generated API documentation for reference.
 
 <swagger-ui src="https://api.solian.app/swagger/develop/v1/swagger.json"/>

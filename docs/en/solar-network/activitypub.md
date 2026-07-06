@@ -32,7 +32,7 @@ Currently, Solar Network supports the following Activities:
 
 Additionally, Solar Network supports displaying local post attachments on the Fediverse, as well as displaying posts and attachments from the Fediverse (a suitable network connection is required).
 
-However, Solar Network does not support Mastodon's Content Warning or Polls. It also will not deliver polls, source checks, or other embeds to the Fediverse.
+However, Solar Network does not support Mastodon's Content Warning or Polls. It also will not deliver polls or other unsupported embeds to the Fediverse.
 
 Since Solar Network posts store rich text in Markdown format, while ActivityPub typically uses HTML, the client converts HTML to Markdown for rendering, and the server converts it to HTML before delivering it to the ActivityPub Inbox. Therefore, certain special syntaxes, such as spoilers and highlights, are unavailable on the Fediverse.
 
